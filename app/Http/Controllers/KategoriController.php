@@ -12,7 +12,8 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        //
+        $allKategori = Kategori::all(); // melakukan query untuk mendapatkan semua data kategori
+        return view('kategori.index', compact('allKategori')); //compact untuk mengirim data ke view
     }
 
     /**
@@ -20,7 +21,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        //
+        return view('kategori.create'); //untuk menampilkan formulir data buku
     }
 
     /**
@@ -28,7 +29,20 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //memproses saat kita submit datanya
+        //buat validasi
+        $validatedData = $request->validate([
+            'nama_kategori' => 'required|max:100'
+        ]);
+
+        //simpan data ke database
+        Kategori::create($validatedData);
+
+        //redirect ke halaman index
+        return redirect()->route('kategori.index');
+
+
+
     }
 
     /**
@@ -36,7 +50,8 @@ class KategoriController extends Controller
      */
     public function show(Kategori $kategori)
     {
-        //
+        //untuk menampilkan detail data kategori
+        return view('kategori.show', compact('kategori'));
     }
 
     /**
@@ -44,7 +59,8 @@ class KategoriController extends Controller
      */
     public function edit(Kategori $kategori)
     {
-        //
+        //menampilkan formulir edit data kategori 
+        return view('kategori.edit', compact('kategori'));
     }
 
     /**
@@ -52,7 +68,17 @@ class KategoriController extends Controller
      */
     public function update(Request $request, Kategori $kategori)
     {
-        //
+        //mengupdet saat kita submit datanya
+        //buat validasi
+        $validatedData = $request->validate([
+            'nama_kategori' => 'required|max:100'
+        ]);
+
+        //update data ke database
+        $kategori->update($validatedData);
+
+        //redirect ke halaman index
+        return redirect()->route('kategori.index');
     }
 
     /**
@@ -60,6 +86,10 @@ class KategoriController extends Controller
      */
     public function destroy(Kategori $kategori)
     {
-        //
+        //menghapus data kategori
+        $kategori->delete();
+
+        //redirect ke halaman index
+        return redirect()->route('kategori.index');
     }
 }

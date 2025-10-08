@@ -10,6 +10,11 @@
 <body>
 <div class="container">
     <h1>Manajemen Data Buku</h1>
+    @if(Auth::check())
+
+    <p> Anda login sebagai: <strong>{{ Auth::user()->email}}</strong></p>
+    
+    @endif
     <div class="nav">
         <ul>
             <li><a href="/kategori">Kategori</a></li>

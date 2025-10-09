@@ -10,9 +10,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('kategori', KategoriController::class);
-Route::resource('penerbit', PenerbitController::class);
-Route::resource('buku', BukuController::class);
+//ini buat proteksi halam jadi harus login dulu
+//ini cara membuat groupnya
+Route::middleware(['auth'])->group(function (){
+    Route::resource('kategori', KategoriController::class);
+    Route::resource('penerbit', PenerbitController::class);
+    Route::resource('buku', BukuController::class);
+});
+
 //route untuk login & logout
 Route::get('/login/',[AuthManualController::class,'index'])->name('login');
 Route::post('/login/',[AuthManualController::class,'loginProses'])->name('loginProses');

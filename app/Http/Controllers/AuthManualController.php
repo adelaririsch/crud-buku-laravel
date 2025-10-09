@@ -37,6 +37,6 @@ class AuthManualController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('Login');
+        return redirect()->route('login');
     }
 }
